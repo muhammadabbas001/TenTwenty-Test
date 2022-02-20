@@ -11,10 +11,10 @@ class MovieDetailVM{
     
     static func getMovieVideoDetail(movieId: Int, onComplete: @escaping (MoviesData?, String?)->()){
         ApiManager.getMovieVideoDetail(movieId: movieId) { videoData, error in
-            if let error = error {
+            if let _ = error {
                 print("Error")
             }else{
-                print(videoData)
+                print("Success")
             }
         }
     }

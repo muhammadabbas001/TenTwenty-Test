@@ -21,8 +21,7 @@ class MainVC: UIViewController {
     
     @IBOutlet var moviesCollView: UICollectionView!
     @IBOutlet weak var headerHightConstraint: NSLayoutConstraint!
-    
-    let images = ["movie_pic1", "movie_pic2", "movie_pic3", "movie_pic1", "movie_pic2", "movie_pic3"]
+    @IBOutlet weak var acticitySpinner: UIActivityIndicatorView!
     
     var moviesData: MoviesData? = nil
 
@@ -45,6 +44,7 @@ class MainVC: UIViewController {
     
     func getUpCommingMoviesRequest(){
         MainViewModel.getUpcomingMovies{ moviesData, error in
+            self.acticitySpinner.isHidden = true
             if let error = error {
                 print(error)
             }else{

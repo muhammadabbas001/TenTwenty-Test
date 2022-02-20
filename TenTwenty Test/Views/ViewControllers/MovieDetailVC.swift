@@ -20,7 +20,9 @@ class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var releaseDataLbl: UILabel!
     @IBOutlet weak var overviewLbl: UITextView!
-    @IBOutlet weak var videoPlayerView: YTPlayerView!
+    @IBOutlet weak var spinnerView: UIView!
+    @IBOutlet weak var spinnerIndicator: UIActivityIndicatorView!
+    @IBOutlet weak var headerHeightConstraint: NSLayoutConstraint!
     
     var bgImageStr = ""
     var releaseDate = ""
@@ -29,6 +31,8 @@ class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
     var genres = ["Action", "Thriller", "Science", "Fiction"]
     var bgColors = [Constants.UI.Color.LIGHT_GREEN_COLOR, Constants.UI.Color.LIGHT_PINK_COLOR, Constants.UI.Color.LIGHT_PURPLE_COLOR, Constants.UI.Color.DARK_YELLOW_COLOR]
     
+    let videoPlayer = YTPlayerView()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -36,10 +40,15 @@ class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
         genresCollectionView.dataSource = self
         genresCollectionView.allowsSelection = false
         
-        videoPlayerView.delegate = self
+        videoPlayer.delegate = self
         
         initialUIConfigurations()
         
+        if Constants.UIScreen.topSafeArea ?? 0 < 21{
+            headerHeightConstraint.constant = 140
+        }
+        
+        NotificationCenter.default.addObserver(self, selector: #selector(playerExited), name: UIWindow.didBecomeHiddenNotification, object: nil)
     }
     
     func initialUIConfigurations(){
@@ -52,10 +61,18 @@ class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
         bgImage.sd_setImage(with: URL(string: "\(Constants.ServerConfig.IMAGE_BASE_URL)\(bgImageStr)"), placeholderImage: UIImage(named: "placeholder.png"))
         releaseDataLbl.text = releaseDate
         overviewLbl.text = overview
+        
+        spinnerViewUI()
                 
         if let topSafeArea = Constants.UIScreen.topSafeArea{
             self.scrollViewConstraintTop.constant = self.scrollViewConstraintTop.constant - topSafeArea
         }
+    }
+    
+    func spinnerViewUI(){
+        self.spinnerView.layer.cornerRadius = 15
+        self.spinnerView.layer.borderColor = Constants.UI.Color.DARK_YELLOW_COLOR.cgColor
+        self.spinnerView.layer.borderWidth = 4
     }
     
     @IBAction func actBack(_ sender: Any) {
@@ -63,22 +80,34 @@ class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
     }
     
     @IBAction func actWatchTrailer(_ sender: Any) {
-//        MovieDetailVM.getMovieVideoDetail(movieId: 656663) { videoData, error in
-//
-//        }
-        videoPlayerView.isHidden = false
-//        videoPlayerView.load(withVideoId: "ta5dr6QxQn0")
-        videoPlayerView.load(withVideoId: "ta5dr6QxQn0", playerVars: ["playsinline": 0])
+        showSpinner()
+        videoPlayer.load(withVideoId: "ta5dr6QxQn0", playerVars: ["playsinline": 0])
+        self.view.addSubview(videoPlayer)
     }
     
     func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
-        videoPlayerView.playVideo()
+        videoPlayer.playVideo()
+        hideSpinner()
     }
     
     func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
         if state == .ended{
-            videoPlayerView.isHidden = true
+            self.videoPlayer.removeFromSuperview()
         }
+    }
+    
+    @objc func playerExited(){
+        self.videoPlayer.removeFromSuperview()
+    }
+    
+    func showSpinner(){
+        self.spinnerView.isHidden = false
+        self.spinnerIndicator.startAnimating()
+    }
+    
+    func hideSpinner(){
+        self.spinnerView.isHidden = true
+        self.spinnerIndicator.stopAnimating()
     }
 }
 

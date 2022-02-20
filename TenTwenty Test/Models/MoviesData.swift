@@ -7,6 +7,7 @@
 
 import Foundation
 
+// MARK: - Welcome
 struct MoviesData: Codable {
     let dates: Dates
     let page: Int
@@ -31,8 +32,7 @@ struct Movie: Codable {
     let backdropPath: String
     let genreIDS: [Int]
     let id: Int
-    let originalLanguage: OriginalLanguage
-    let originalTitle, overview: String
+    let originalLanguage, originalTitle, overview: String
     let popularity: Double
     let posterPath, releaseDate, title: String
     let video: Bool
@@ -53,11 +53,4 @@ struct Movie: Codable {
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
     }
-}
-
-enum OriginalLanguage: String, Codable {
-    case en = "en"
-    case es = "es"
-    case ja = "ja"
-    case no = "no"
 }

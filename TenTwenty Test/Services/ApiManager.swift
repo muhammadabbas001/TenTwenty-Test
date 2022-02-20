@@ -10,11 +10,13 @@ import Alamofire
 
 class ApiManager{
     static func getUpcommingMovies(onComplete: @escaping (MoviesData?, String?)->()){
-                
-        let headers: HTTPHeaders? = ["Content-Type":"application/json"]
         
-        let request = AF.request("\(Constants.ServerConfig.BASE_URL)/movie/upcoming?api_key=\(Constants.ServerConfig.API_KEY)", method: .post, parameters: [:], encoding: JSONEncoding.default, headers: headers)
-        request.responseJSON { response in
+        var req = URLRequest(url: URL(string: "\(Constants.ServerConfig.BASE_URL)/movie/upcoming?api_key=\(Constants.ServerConfig.API_KEY)")!)
+         req.httpMethod = "POST"
+         req.setValue("application/json", forHTTPHeaderField: "Content-Type")
+         req.cachePolicy = NSURLRequest.CachePolicy.reloadIgnoringCacheData
+        
+        AF.request(req).validate().responseJSON { response in
             
             switch (response.result) {
             case .success(_):
@@ -26,8 +28,7 @@ class ApiManager{
                             let moviesData = try JSONDecoder().decode(MoviesData.self, from: data)
                             onComplete(moviesData, nil)
                         }
-                    }
-                    catch{
+                    }catch{
                         onComplete(nil, "Invalid Model")
                     }
                 default:
