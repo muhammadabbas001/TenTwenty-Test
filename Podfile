@@ -9,5 +9,6 @@ target 'TenTwenty Test' do
 
 pod 'Alamofire', '~> 5.3'
 pod 'SDWebImage', '~> 5.0'
+pod 'youtube-ios-player-helper', '0.1.6'
 
 end

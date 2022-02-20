@@ -7,8 +7,9 @@
 
 import UIKit
 import SDWebImage
+import youtube_ios_player_helper
 
-class MovieDetailVC: UIViewController {
+class MovieDetailVC: UIViewController, YTPlayerViewDelegate {
     
     @IBOutlet weak var headerBgView: UIView!
     @IBOutlet weak var getTicketsBtn: UIButton!
@@ -16,10 +17,10 @@ class MovieDetailVC: UIViewController {
     @IBOutlet weak var stackBgView: UIView!
     @IBOutlet weak var genresCollectionView: UICollectionView!
     @IBOutlet weak var scrollViewConstraintTop: NSLayoutConstraint!
-    
     @IBOutlet weak var bgImage: UIImageView!
     @IBOutlet weak var releaseDataLbl: UILabel!
     @IBOutlet weak var overviewLbl: UITextView!
+    @IBOutlet weak var videoPlayerView: YTPlayerView!
     
     var bgImageStr = ""
     var releaseDate = ""
@@ -34,6 +35,8 @@ class MovieDetailVC: UIViewController {
         genresCollectionView.delegate = self
         genresCollectionView.dataSource = self
         genresCollectionView.allowsSelection = false
+        
+        videoPlayerView.delegate = self
         
         initialUIConfigurations()
         
@@ -63,6 +66,19 @@ class MovieDetailVC: UIViewController {
 //        MovieDetailVM.getMovieVideoDetail(movieId: 656663) { videoData, error in
 //
 //        }
+        videoPlayerView.isHidden = false
+//        videoPlayerView.load(withVideoId: "ta5dr6QxQn0")
+        videoPlayerView.load(withVideoId: "ta5dr6QxQn0", playerVars: ["playsinline": 0])
+    }
+    
+    func playerViewDidBecomeReady(_ playerView: YTPlayerView) {
+        videoPlayerView.playVideo()
+    }
+    
+    func playerView(_ playerView: YTPlayerView, didChangeTo state: YTPlayerState) {
+        if state == .ended{
+            videoPlayerView.isHidden = true
+        }
     }
 }
 

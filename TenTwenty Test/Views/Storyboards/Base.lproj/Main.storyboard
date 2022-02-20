@@ -296,6 +296,9 @@
                                     <constraint firstItem="xV9-9i-eki" firstAttribute="leading" secondItem="4AM-HO-CLI" secondAttribute="leading" id="uDz-zG-ZDN"/>
                                 </constraints>
                             </scrollView>
+                            <view hidden="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l1Q-wC-Bqn" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="AgC-DU-u42"/>
                         <color key="backgroundColor" systemColor="tertiarySystemBackgroundColor"/>
@@ -304,6 +307,10 @@
                             <constraint firstItem="sfZ-p0-Gm8" firstAttribute="leading" secondItem="8i6-Nn-bde" secondAttribute="leading" id="A1o-Zi-BJw"/>
                             <constraint firstItem="sfZ-p0-Gm8" firstAttribute="top" secondItem="8i6-Nn-bde" secondAttribute="top" id="FWx-QB-Dwv"/>
                             <constraint firstAttribute="bottom" secondItem="sfZ-p0-Gm8" secondAttribute="bottom" id="Hz5-dt-S32"/>
+                            <constraint firstItem="l1Q-wC-Bqn" firstAttribute="top" secondItem="8i6-Nn-bde" secondAttribute="top" id="NSN-IV-XY3"/>
+                            <constraint firstItem="AgC-DU-u42" firstAttribute="trailing" secondItem="l1Q-wC-Bqn" secondAttribute="trailing" id="Rvg-os-aWZ"/>
+                            <constraint firstAttribute="bottom" secondItem="l1Q-wC-Bqn" secondAttribute="bottom" id="gmL-Ka-ztk"/>
+                            <constraint firstItem="l1Q-wC-Bqn" firstAttribute="leading" secondItem="AgC-DU-u42" secondAttribute="leading" id="wTR-Bm-4KS"/>
                         </constraints>
                     </view>
                     <connections>
@@ -315,6 +322,7 @@
                         <outlet property="releaseDataLbl" destination="vVI-gG-RqR" id="cIE-It-bZk"/>
                         <outlet property="scrollViewConstraintTop" destination="FWx-QB-Dwv" id="m0a-EP-rri"/>
                         <outlet property="stackBgView" destination="ZNb-PD-XBr" id="ER0-hx-ktb"/>
+                        <outlet property="videoPlayerView" destination="l1Q-wC-Bqn" id="Jwi-ii-KAz"/>
                         <outlet property="watchTrailerBtn" destination="atd-il-il0" id="1JG-RB-BLO"/>
                     </connections>
                 </viewController>
@@ -433,6 +441,36 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="c4L-s1-ubV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1389.8550724637682" y="67.633928571428569"/>
+        </scene>
+        <!--Video PlayerVC-->
+        <scene sceneID="M6Q-2k-d0j">
+            <objects>
+                <viewController storyboardIdentifier="VideoPlayerVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="eJy-A5-WBD" customClass="VideoPlayerVC" customModule="TenTwenty_Test" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="G60-gf-8XD">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pNl-O2-Aww" customClass="YTPlayerView">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                                <color key="backgroundColor" red="0.85882352939999995" green="0.85882352939999995" blue="0.87450980389999999" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                        </subviews>
+                        <viewLayoutGuide key="safeArea" id="84a-Qt-rsb"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="pNl-O2-Aww" firstAttribute="leading" secondItem="84a-Qt-rsb" secondAttribute="leading" id="Kpt-E5-cHx"/>
+                            <constraint firstItem="84a-Qt-rsb" firstAttribute="trailing" secondItem="pNl-O2-Aww" secondAttribute="trailing" id="ciB-Xe-gYr"/>
+                            <constraint firstItem="pNl-O2-Aww" firstAttribute="top" secondItem="G60-gf-8XD" secondAttribute="top" id="lbs-Te-ohl"/>
+                            <constraint firstAttribute="bottom" secondItem="pNl-O2-Aww" secondAttribute="bottom" id="pSm-wT-Ugg"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="videoPlayeView" destination="pNl-O2-Aww" id="QIG-g2-be8"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="kL6-XO-A92" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2071.0144927536235" y="67.633928571428569"/>
         </scene>
     </scenes>
     <resources>
