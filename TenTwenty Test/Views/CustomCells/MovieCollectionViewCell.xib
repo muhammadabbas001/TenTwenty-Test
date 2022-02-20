@@ -54,6 +54,7 @@
             <connections>
                 <outlet property="bgImg" destination="uWW-Is-YBv" id="xx7-Ok-Woh"/>
                 <outlet property="gradView" destination="v4v-3V-pMi" id="exs-QS-q1R"/>
+                <outlet property="title" destination="xrl-F0-t1Y" id="wm1-z1-98u"/>
             </connections>
             <point key="canvasLocation" x="21.739130434782609" y="131.91964285714286"/>
         </collectionViewCell>

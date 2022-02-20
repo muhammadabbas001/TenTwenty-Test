@@ -162,6 +162,9 @@
                                                         <buttonConfiguration key="configuration" style="plain" image="play" title="  Watch Trailer">
                                                             <fontDescription key="titleFontDescription" type="boldSystem" pointSize="18"/>
                                                         </buttonConfiguration>
+                                                        <connections>
+                                                            <action selector="actWatchTrailer:" destination="Il5-os-Jty" eventType="touchUpInside" id="Zk3-D0-5BT"/>
+                                                        </connections>
                                                     </button>
                                                 </subviews>
                                                 <constraints>
@@ -304,9 +307,12 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="bgImage" destination="pJT-zS-5Oz" id="wB0-24-h6w"/>
                         <outlet property="genresCollectionView" destination="xV9-9i-eki" id="NjC-Em-qxk"/>
                         <outlet property="getTicketsBtn" destination="qZ7-6F-jjc" id="AQy-Uz-bcX"/>
                         <outlet property="headerBgView" destination="ZJB-NG-ilE" id="eN7-oA-xrJ"/>
+                        <outlet property="overviewLbl" destination="cEc-IO-G37" id="d35-re-x4o"/>
+                        <outlet property="releaseDataLbl" destination="vVI-gG-RqR" id="cIE-It-bZk"/>
                         <outlet property="scrollViewConstraintTop" destination="FWx-QB-Dwv" id="m0a-EP-rri"/>
                         <outlet property="stackBgView" destination="ZNb-PD-XBr" id="ER0-hx-ktb"/>
                         <outlet property="watchTrailerBtn" destination="atd-il-il0" id="1JG-RB-BLO"/>

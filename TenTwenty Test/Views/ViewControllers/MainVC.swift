@@ -15,6 +15,7 @@ import UIKit
 //
 
 import UIKit
+import SDWebImage
 
 class MainVC: UIViewController {
     
@@ -22,6 +23,8 @@ class MainVC: UIViewController {
     @IBOutlet weak var headerHightConstraint: NSLayoutConstraint!
     
     let images = ["movie_pic1", "movie_pic2", "movie_pic3", "movie_pic1", "movie_pic2", "movie_pic3"]
+    
+    var moviesData: MoviesData? = nil
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -35,6 +38,22 @@ class MainVC: UIViewController {
         if Constants.UIScreen.topSafeArea ?? 0 < 21{
             headerHightConstraint.constant = 90
         }
+        
+        getUpCommingMoviesRequest()
+        
+    }
+    
+    func getUpCommingMoviesRequest(){
+        MainViewModel.getUpcomingMovies{ moviesData, error in
+            if let error = error {
+                print(error)
+            }else{
+                self.moviesData = moviesData
+                DispatchQueue.main.async {
+                    self.moviesCollView.reloadData()
+                }
+            }
+        }
     }
     
     @IBAction func actSearch(_ sender: Any) {
@@ -46,22 +65,27 @@ class MainVC: UIViewController {
 
 extension MainVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        MainViewModel.goToMovieDetailVC(navigationController: self.navigationController)
+        let movie = self.moviesData?.results[indexPath.section]
+        MainViewModel.goToMovieDetailVC(navigationController: self.navigationController, bgImg: "\(Constants.ServerConfig.IMAGE_BASE_URL)\(movie?.posterPath ?? "")", releaseData: movie?.releaseDate ?? "", overview: movie?.overview ?? "")
     }
 }
 
 extension MainVC: UICollectionViewDataSource{
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        6
+        self.moviesData?.results.count ?? 0
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        
         let cell = collectionView.dequeueReusableCell(withReuseIdentifier: MovieCollectionViewCell.identifier, for: indexPath) as! MovieCollectionViewCell
-        cell.bgImg.image = UIImage(named: images[indexPath.section])
+        let movie = self.moviesData?.results[indexPath.section]
+        cell.bgImg.sd_setImage(with: URL(string: "\(Constants.ServerConfig.IMAGE_BASE_URL)\(movie?.posterPath ?? "")"), placeholderImage: UIImage(named: "placeholder.png"))
+        cell.title.text = movie?.title ?? ""
         cell.layer.cornerRadius = 10
+        
         return cell
     }
     

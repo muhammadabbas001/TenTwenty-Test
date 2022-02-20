@@ -8,5 +8,6 @@ target 'TenTwenty Test' do
   # Pods for TenTwenty Test
 
 pod 'Alamofire', '~> 5.3'
+pod 'SDWebImage', '~> 5.0'
 
 end

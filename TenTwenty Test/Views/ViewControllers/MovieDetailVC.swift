@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import SDWebImage
 
 class MovieDetailVC: UIViewController {
     
@@ -15,6 +16,14 @@ class MovieDetailVC: UIViewController {
     @IBOutlet weak var stackBgView: UIView!
     @IBOutlet weak var genresCollectionView: UICollectionView!
     @IBOutlet weak var scrollViewConstraintTop: NSLayoutConstraint!
+    
+    @IBOutlet weak var bgImage: UIImageView!
+    @IBOutlet weak var releaseDataLbl: UILabel!
+    @IBOutlet weak var overviewLbl: UITextView!
+    
+    var bgImageStr = ""
+    var releaseDate = ""
+    var overview = ""
     
     var genres = ["Action", "Thriller", "Science", "Fiction"]
     var bgColors = [Constants.UI.Color.LIGHT_GREEN_COLOR, Constants.UI.Color.LIGHT_PINK_COLOR, Constants.UI.Color.LIGHT_PURPLE_COLOR, Constants.UI.Color.DARK_YELLOW_COLOR]
@@ -37,6 +46,10 @@ class MovieDetailVC: UIViewController {
         Utility.setGradientBackground(uiView: stackBgView)
         self.view.insetsLayoutMarginsFromSafeArea = false
         
+        bgImage.sd_setImage(with: URL(string: "\(Constants.ServerConfig.IMAGE_BASE_URL)\(bgImageStr)"), placeholderImage: UIImage(named: "placeholder.png"))
+        releaseDataLbl.text = releaseDate
+        overviewLbl.text = overview
+                
         if let topSafeArea = Constants.UIScreen.topSafeArea{
             self.scrollViewConstraintTop.constant = self.scrollViewConstraintTop.constant - topSafeArea
         }
@@ -44,6 +57,12 @@ class MovieDetailVC: UIViewController {
     
     @IBAction func actBack(_ sender: Any) {
         self.navigationController?.popViewController(animated: true)
+    }
+    
+    @IBAction func actWatchTrailer(_ sender: Any) {
+//        MovieDetailVM.getMovieVideoDetail(movieId: 656663) { videoData, error in
+//
+//        }
     }
 }
 
