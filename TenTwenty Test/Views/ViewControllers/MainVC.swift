@@ -19,6 +19,8 @@ import UIKit
 class MainVC: UIViewController {
     
     @IBOutlet var moviesCollView: UICollectionView!
+    @IBOutlet weak var headerHightConstraint: NSLayoutConstraint!
+    
     let images = ["movie_pic1", "movie_pic2", "movie_pic3", "movie_pic1", "movie_pic2", "movie_pic3"]
 
     override func viewDidLoad() {
@@ -29,14 +31,22 @@ class MainVC: UIViewController {
         moviesCollView.delegate = self
         moviesCollView.dataSource = self
         moviesCollView.collectionViewLayout = UICollectionViewFlowLayout()
+        
+        if Constants.UIScreen.topSafeArea ?? 0 < 21{
+            headerHightConstraint.constant = 90
+        }
     }
     
+    @IBAction func actSearch(_ sender: Any) {
+        
+        MainViewModel.goToSearchVC(navigationController: self.navigationController)
+        
+    }
 }
 
 extension MainVC: UICollectionViewDelegate{
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let movieDetailVC = UIStoryboard(name: "Main", bundle: nil).instantiateViewController(withIdentifier: "MovieDetailVC") as! MovieDetailVC
-        self.navigationController?.pushViewController(movieDetailVC, animated: true)
+        MainViewModel.goToMovieDetailVC(navigationController: self.navigationController)
     }
 }
 

@@ -14,6 +14,7 @@ class MovieDetailVC: UIViewController {
     @IBOutlet weak var watchTrailerBtn: UIButton!
     @IBOutlet weak var stackBgView: UIView!
     @IBOutlet weak var genresCollectionView: UICollectionView!
+    @IBOutlet weak var scrollViewConstraintTop: NSLayoutConstraint!
     
     var genres = ["Action", "Thriller", "Science", "Fiction"]
     var bgColors = [Constants.UI.Color.LIGHT_GREEN_COLOR, Constants.UI.Color.LIGHT_PINK_COLOR, Constants.UI.Color.LIGHT_PURPLE_COLOR, Constants.UI.Color.DARK_YELLOW_COLOR]
@@ -34,6 +35,11 @@ class MovieDetailVC: UIViewController {
         self.getTicketsBtn.layer.cornerRadius = 10
         self.watchTrailerBtn = Utility.designActBtn(uiButton: watchTrailerBtn, borderColor: Constants.UI.Color.LIGHT_BLUE_COLOR)
         Utility.setGradientBackground(uiView: stackBgView)
+        self.view.insetsLayoutMarginsFromSafeArea = false
+        
+        if let topSafeArea = Constants.UIScreen.topSafeArea{
+            self.scrollViewConstraintTop.constant = self.scrollViewConstraintTop.constant - topSafeArea
+        }
     }
     
     @IBAction func actBack(_ sender: Any) {

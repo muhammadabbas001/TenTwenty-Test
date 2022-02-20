@@ -1,0 +1,6 @@
+framework module Pods_TenTwenty_Test {
+  umbrella header "Pods-TenTwenty Test-umbrella.h"
+
+  export *
+  module * { export * }
+}
